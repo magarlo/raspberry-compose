@@ -34,8 +34,8 @@ services:
       - PUID=1000 #optional
       - PGID=1000 #optional
       - TZ=Europe/Madrid
-      - SUBDOMAINS=makris55
-      - TOKEN=e4f13432-8924-49da-ac77-d6ca5b1c0a0f
+      - SUBDOMAINS=your_domain
+      - TOKEN=token
       - LOG_FILE=false #optional
     volumes:
       - /path/to/appdata/config:/config #optional
