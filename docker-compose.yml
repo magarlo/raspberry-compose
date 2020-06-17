@@ -1,0 +1,110 @@
+version: "2"
+
+# More info at https://github.com/pi-hole/docker-pi-hole/ and https://docs.pi-hole.net/
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "67:67/udp"
+      - "80:80/tcp"
+      - "443:443/tcp"
+    environment:
+      TZ: 'Europe/Madrid'
+      WEBPASSWORD: 'makris55'
+    # Volumes store your data between container upgrades
+    volumes:
+       - './etc-pihole/:/etc/pihole/'
+       - './etc-dnsmasq.d/:/etc/dnsmasq.d/'
+    dns:
+      - 127.0.0.1
+      - 1.1.1.1
+    # Recommended but not required (DHCP needs NET_ADMIN)
+    #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
+    cap_add:
+      - NET_ADMIN
+    restart: unless-stopped
+
+  duckdns:
+    image: linuxserver/duckdns
+    container_name: duckdns
+    environment:
+      - PUID=1000 #optional
+      - PGID=1000 #optional
+      - TZ=Europe/Madrid
+      - SUBDOMAINS=makris55
+      - TOKEN=e4f13432-8924-49da-ac77-d6ca5b1c0a0f
+      - LOG_FILE=false #optional
+    volumes:
+      - /path/to/appdata/config:/config #optional
+    restart: unless-stopped
+
+  samba:
+    image: dperson/samba:rpi
+    restart: always
+    command: '-u "pi;makris55" -s "media;/media;yes;no" -s "downloads;/downloads;yes;no"'
+    stdin_open: true
+    tty: true
+    ports:
+      - 139:130
+      - 445:445
+    volumes:
+      - /usr/share/zoneinfo/Europe/Madrid:/etc/localtime
+      - /media/pi:/media
+      - /media/pi/torrents:/downloads      
+
+  plex:
+    image: jaymoulin/plex:1.16.5
+    expose:
+      - 32400
+      - 33400
+    hostname: raspberrypi
+    volumes:
+      - /media/pi/Plex Media Server:/root/Library/Application Support/Plex Media Server
+      - /media/pi/tmp:/tmp    
+      - /media/pi:/media
+    restart: unless-stopped
+    networks: 
+      lan:
+        ipv4_address: 192.168.1.56
+
+  transmission:
+    image : jaymoulin/transmission
+    command: transmission-daemon -f -g /config
+    volumes:
+      - ./transmission:/config
+      - /media/pi/torrents:/downloads
+    ports:
+      - 9091:9091
+      - 51413:51413
+      - 51413:51413/udp
+    expose:
+      - 9091
+    restart: unless-stopped
+
+  flexget:
+    build: flexget-arm
+    volumes:
+      - ./flexget:/config
+      - /media/pi/torrents:/downloads
+      - /media/pi:/storage
+    ports:
+      - 5050:5050
+    environment:
+      - TORRENT_PLUGIN=transmission
+      - FG_WEBUI_PASSWD=123456
+    restart: unless-stopped
+    links:
+      - transmission
+
+networks:
+  lan:
+    driver: macvlan
+    driver_opts:
+      parent: wlan0
+    ipam:
+      config:
+        - subnet: "192.168.1.0/24"
+          gateway: "192.168.1.1"
