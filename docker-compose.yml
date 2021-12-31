@@ -34,8 +34,8 @@ services:
       - PUID=1001
       - PGID=1001    
       - TZ=Europe/Madrid
-      - SUBDOMAINS=makris55
-      - TOKEN=e4f13432-8924-49da-ac77-d6ca5b1c0a0f
+      - SUBDOMAINS=your_domain
+      - TOKEN=token
       - LOG_FILE=false #optional
     volumes:
       - /media/pi/0BF04B19685AC6432/config:/config #optional
