@@ -1,4 +1,4 @@
-version: "2"
+version: "2.1"
 
 # More info at https://github.com/pi-hole/docker-pi-hole/ and https://docs.pi-hole.net/
 services:
@@ -25,86 +25,39 @@ services:
     #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
     cap_add:
       - NET_ADMIN
-    restart: unless-stopped
+    restart: always
 
   duckdns:
     image: linuxserver/duckdns
     container_name: duckdns
     environment:
-      - PUID=1000 #optional
-      - PGID=1000 #optional
+      - PUID=1001
+      - PGID=1001    
       - TZ=Europe/Madrid
       - SUBDOMAINS=makris55
       - TOKEN=e4f13432-8924-49da-ac77-d6ca5b1c0a0f
       - LOG_FILE=false #optional
     volumes:
-      - /path/to/appdata/config:/config #optional
-    restart: unless-stopped
-
-  samba:
-    image: dperson/samba:rpi
+      - /media/pi/0BF04B19685AC6432/config:/config #optional
     restart: always
-    command: '-u "pi;makris55" -s "media;/media;yes;no" -s "downloads;/downloads;yes;no"'
-    stdin_open: true
-    tty: true
-    ports:
-      - 139:130
-      - 445:445
-    volumes:
-      - /usr/share/zoneinfo/Europe/Madrid:/etc/localtime
-      - /media/pi:/media
-      - /media/pi/torrents:/downloads      
 
   plex:
-    image: jaymoulin/plex:1.16.5
+    image: ghcr.io/linuxserver/plex:arm32v7-bionic-version-1.21.1.3830-6c22540d5
+    container_name: plex
     expose:
       - 32400
       - 33400
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - VERSION=docker     
+      - UMASK_SET=022 #optional
     hostname: raspberrypi
     volumes:
-      - /media/pi/Plex Media Server:/root/Library/Application Support/Plex Media Server
-      - /media/pi/tmp:/tmp    
-      - /media/pi:/media
+      #- /media/pi/0BF04B19685AC643/Plex Media Server:/root/Library/Application Support/Plex Media Server
+      #- /media/pi/0BF04B19685AC643/tmp:/tmp
+      - /media/pi/0BF04B19685AC643/config:/config
+      - /media/pi/0BF04B19685AC643/media:/media
     restart: unless-stopped
-    networks: 
-      lan:
-        ipv4_address: 192.168.1.56
+    network_mode: "host"
 
-  transmission:
-    image : jaymoulin/transmission
-    command: transmission-daemon -f -g /config
-    volumes:
-      - ./transmission:/config
-      - /media/pi/torrents:/downloads
-    ports:
-      - 9091:9091
-      - 51413:51413
-      - 51413:51413/udp
-    expose:
-      - 9091
-    restart: unless-stopped
-
-  flexget:
-    build: flexget-arm
-    volumes:
-      - ./flexget:/config
-      - /media/pi/torrents:/downloads
-      - /media/pi:/storage
-    ports:
-      - 5050:5050
-    environment:
-      - TORRENT_PLUGIN=transmission
-      - FG_WEBUI_PASSWD=123456
-    restart: unless-stopped
-    links:
-      - transmission
-
-networks:
-  lan:
-    driver: macvlan
-    driver_opts:
-      parent: wlan0
-    ipam:
-      config:
-        - subnet: "192.168.1.0/24"
-          gateway: "192.168.1.1"

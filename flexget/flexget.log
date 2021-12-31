@@ -1,0 +1,51 @@
+2020-06-17 20:36 VERBOSE  manager                       Creating new database /config/db-config.sqlite - DO NOT INTERUPT ...
+2020-06-17 20:36 INFO     web_server_daemon                 Running web server at IP 0.0.0.0:3539
+2020-06-17 20:36 INFO     web_server_daemon                 Initiating API
+2020-06-17 20:36 INFO     web_server_daemon                 Registering WebUI v1
+2020-06-17 20:36 WARNING  web_server                    No password set for web server, create one by using `flexget web passwd <password>`
+2020-06-17 20:36 INFO     web_server                    Web interface available at http://172.18.0.6:3539
+2020-06-17 20:36 INFO     scheduler                     Local timezone name could not be determined. Scheduler will display times in UTC for any logmessages. To resolve this set up /etc/timezone with correct time zone name.
+2020-06-17 20:36 INFO     scheduler                     No schedules defined in config. Defaulting to run all tasks on a 1 hour interval.
+2020-06-17 20:36 INFO     scheduler                     Starting scheduler
+2020-06-17 20:40 INFO     manager                       Got SIGTERM. Shutting down.
+2020-06-17 20:40 INFO     web_server                    Shutting down web server
+2020-06-17 20:57 INFO     web_server_daemon                 Running web server at IP 0.0.0.0:3539
+2020-06-17 20:57 INFO     web_server_daemon                 Initiating API
+2020-06-17 20:57 INFO     web_server_daemon                 Registering WebUI v1
+2020-06-17 20:57 WARNING  web_server                    No password set for web server, create one by using `flexget web passwd <password>`
+2020-06-17 20:57 INFO     web_server                    Web interface available at http://172.18.0.6:3539
+2020-06-17 20:57 INFO     scheduler                     Local timezone name could not be determined. Scheduler will display times in UTC for any logmessages. To resolve this set up /etc/timezone with correct time zone name.
+2020-06-17 20:57 INFO     scheduler                     No schedules defined in config. Defaulting to run all tasks on a 1 hour interval.
+2020-06-17 20:57 INFO     scheduler                     Starting scheduler
+2020-06-17 21:01 INFO     manager                       Got SIGTERM. Shutting down.
+2020-06-17 21:01 INFO     web_server                    Shutting down web server
+2020-06-17 21:22 INFO     web_server_daemon                 Running web server at IP 0.0.0.0:3539
+2020-06-17 21:22 INFO     web_server_daemon                 Initiating API
+2020-06-17 21:22 INFO     web_server_daemon                 Registering WebUI v1
+2020-06-17 21:22 WARNING  web_server                    No password set for web server, create one by using `flexget web passwd <password>`
+2020-06-17 21:22 INFO     web_server                    Web interface available at http://172.18.0.6:3539
+2020-06-17 21:22 INFO     scheduler                     Local timezone name could not be determined. Scheduler will display times in UTC for any logmessages. To resolve this set up /etc/timezone with correct time zone name.
+2020-06-17 21:22 INFO     scheduler                     No schedules defined in config. Defaulting to run all tasks on a 1 hour interval.
+2020-06-17 21:22 INFO     scheduler                     Starting scheduler
+2020-06-17 21:22 INFO     manager                       Got SIGTERM. Shutting down.
+2020-06-17 21:22 INFO     web_server                    Shutting down web server
+2020-06-18 11:07 INFO     web_server_daemon                 Running web server at IP 0.0.0.0:3539
+2020-06-18 11:07 INFO     web_server_daemon                 Initiating API
+2020-06-18 11:07 INFO     web_server_daemon                 Registering WebUI v1
+2020-06-18 11:07 WARNING  web_server                    No password set for web server, create one by using `flexget web passwd <password>`
+2020-06-18 11:07 INFO     web_server                    Web interface available at http://172.18.0.6:3539
+2020-06-18 11:07 INFO     scheduler                     Local timezone name could not be determined. Scheduler will display times in UTC for any logmessages. To resolve this set up /etc/timezone with correct time zone name.
+2020-06-18 11:07 INFO     scheduler                     No schedules defined in config. Defaulting to run all tasks on a 1 hour interval.
+2020-06-18 11:07 INFO     scheduler                     Starting scheduler
+2020-06-18 11:07 INFO     manager       example-task    Running database cleanup.
+2020-06-18 11:07 INFO     db_analyze    example-task    Running ANALYZE on database to improve performance.
+2020-06-18 11:07 INFO     db_vacuum     example-task    Running VACUUM on database to improve performance and decrease db size.
+2020-06-18 11:07 INFO     web_server    example-task    Shutting down web server
+2020-06-18 11:07 INFO     web_server_daemon example-task    Running web server at IP 0.0.0.0:3539
+2020-06-18 11:07 INFO     web_server_daemon example-task    Initiating API
+2020-06-18 11:07 INFO     web_server_daemon example-task    Registering WebUI v1
+2020-06-18 11:07 WARNING  web_server    example-task    No password set for web server, create one by using `flexget web passwd <password>`
+2020-06-18 11:07 INFO     web_server                    Web interface available at http://172.18.0.6:3539
+2020-06-18 11:07 INFO     scheduler     example-task    No schedules defined in config. Defaulting to run all tasks on a 1 hour interval.
+2020-06-18 11:07 CRITICAL rss           example-task    RSS Feed example-task (http://example.com/feed.xml) not found
+2020-06-18 11:07 WARNING  task          example-task    Aborting task (plugin: rss)
